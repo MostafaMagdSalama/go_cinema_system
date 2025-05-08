@@ -3,8 +3,12 @@ package main
 import (
 	"cinema_system/config/db"
 	ENVconfig "cinema_system/config/environment"
+	"cinema_system/internal/customer"
 	"cinema_system/internal/movie"
+	"cinema_system/internal/seat"
 	"cinema_system/internal/show"
+	"cinema_system/internal/theatre"
+	"cinema_system/internal/ticket"
 	"context"
 	"fmt"
 	"log"
@@ -45,6 +49,27 @@ func main() {
 	showService := show.NewService(showRepo)
 	showHandler := show.NewHandler(showService)
 	showHandler.RegisterRoutes(r)
+
+	theatreRepo := theatre.NewPostgresRepository(db)
+	theatreService := theatre.NewService(theatreRepo)
+	theatreHandler := theatre.NewHandler(theatreService)
+	theatreHandler.RegisterRoutes(r)
+
+	seatRepo := seat.NewPostgresRepository(db)
+	seatService := seat.NewService(seatRepo)
+	seatHandler := seat.NewHandler(seatService)
+	seatHandler.RegisterRoutes(r)
+
+	customerRepo := customer.NewPostgresRepository(db)
+	customerService := customer.NewService(customerRepo)
+	customerHandler := customer.NewHandler(customerService)
+	customerHandler.RegisterRoutes(r)
+
+	ticketRepo := ticket.NewPostgresRepository(db)
+	ticketService := ticket.NewService(ticketRepo)
+	ticketHandler := ticket.NewHandler(ticketService)
+	ticketHandler.RegisterRoutes(r)
+
 
 	if err != nil {
 		log.Fatal(err)
