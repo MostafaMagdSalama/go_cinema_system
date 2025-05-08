@@ -1,27 +1,24 @@
-package config
+package db
 
 import (
 	"database/sql"
+	"fmt"
 
-	"log"
+	_ "github.com/lib/pq"
 	"github.com/pkg/errors"
-	_"github.com/lib/pq"
-	
 )
 
 func Setup_DB(conn_string string) (*sql.DB, error) {
-	log.Print("inside setup")
+	fmt.Println("inside setup")
 
 	db, err := sql.Open("postgres", conn_string)
 
 	if err != nil {
-		return nil, errors.Wrap(err, "connection with db ")
-
+		return nil, errors.Wrap(err, "connection with db")
 	}
 
-
 	if err := db.Ping(); err != nil {
-		errors.Wrap(err, "error in db ping")
+		return nil, errors.Wrap(err, "error in db ping")
 	}
 
 	return db, nil
