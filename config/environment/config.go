@@ -8,6 +8,7 @@ import (
 
 type EnvireonmentConfig struct {
 	DB_CONNECTION string `envvonfig:"DB_CONNECTION" required:"true"`
+	PORT          string `envvonfig:"PORT" required:"true"`
 }
 
 var (
