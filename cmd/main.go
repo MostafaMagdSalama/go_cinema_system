@@ -4,6 +4,7 @@ import (
 	"cinema_system/config/db"
 	ENVconfig "cinema_system/config/environment"
 	"cinema_system/internal/movie"
+	"cinema_system/internal/show"
 	"context"
 	"fmt"
 	"log"
@@ -39,6 +40,11 @@ func main() {
 	movieService := movie.NewService(movieRepo)
 	movieHandler := movie.NewHandler(movieService)
 	movieHandler.RegisterRoutes(r)
+
+	showRepo := show.NewPostgresRepository(db)
+	showService := show.NewService(showRepo)
+	showHandler := show.NewHandler(showService)
+	showHandler.RegisterRoutes(r)
 
 	if err != nil {
 		log.Fatal(err)
